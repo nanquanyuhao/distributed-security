@@ -1,0 +1,4 @@
+### 资源拥有者打开客户端，客户端要求资源拥有者给予授权，它将浏览器重定向到授权服务器，重定向时会附加客户端的身份信息
+### 需要在确认授权后重定向的地址中取到 access_token
+GET http://localhost:53020/uaa/oauth/authorize?client_id=c1&response_type=token&scope=all&redirect_uri=http://www.baidu.com
+Accept: application/json
