@@ -1,4 +1,4 @@
-package java.net.nanquanyuhao.security.distributed.order.config;
+package net.nanquanyuhao.security.distributed.order.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

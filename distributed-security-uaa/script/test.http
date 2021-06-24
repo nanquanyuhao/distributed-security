@@ -1,0 +1,11 @@
+### 资源拥有者打开客户端，客户端要求资源拥有者给予授权，它将浏览器重定向到授权服务器，重定向时会附加客户端的身份信息
+### 需要在确认授权后重定向的地址中取到 code
+GET http://localhost:53020/uaa/oauth/authorize?client_id=c1&response_type=code&scope=all&redirect_uri=http://www.baidu.com
+Accept: application/json
+
+### 客户端拿着授权码向授权服务器索要访问 access_token
+### 参数中 code 为上面通过确认授权后，重定向回的地址后面跟的参数
+POST http://localhost:53020/uaa/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=c1&client_secret=secret&grant_type=authorization_code&code=IhSLuA&redirect_uri=http://www.baidu.com
