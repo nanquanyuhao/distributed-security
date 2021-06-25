@@ -1,21 +1,64 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : CentOS-7-x86_64
+ Source Server         : 192.168.235.136_liyh1928
  Source Server Type    : MySQL
- Source Server Version : 50717
- Source Host           : 192.168.235.101:3306
+ Source Server Version : 50732
+ Source Host           : 192.168.235.136:3306
  Source Schema         : user_db
 
  Target Server Type    : MySQL
- Target Server Version : 50717
+ Target Server Version : 50732
  File Encoding         : 65001
 
- Date: 23/06/2021 22:02:59
+ Date: 25/06/2021 15:45:34
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for oauth_client_details
+-- ----------------------------
+DROP TABLE IF EXISTS `oauth_client_details`;
+CREATE TABLE `oauth_client_details`  (
+  `client_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '客户端标识',
+  `resource_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '接入资源列表',
+  `client_secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '客户端秘钥',
+  `scope` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `authorized_grant_types` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `web_server_redirect_uri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `authorities` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `access_token_validity` int(11) NULL DEFAULT NULL,
+  `refresh_token_validity` int(11) NULL DEFAULT NULL,
+  `additional_information` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
+  `archived` tinyint(4) NULL DEFAULT NULL,
+  `trusted` tinyint(4) NULL DEFAULT NULL,
+  `autoapprove` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`client_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '接入客户端信息' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of oauth_client_details
+-- ----------------------------
+INSERT INTO `oauth_client_details` VALUES ('c1', 'res1', '$2a$10$hnenme41CjAqx7t24.DEAumAJkH5kz8xJUjv5A9hNqr8id.b6g5FK', 'ROLE_ADMIN,ROLE_USER,ROLE_API', 'client_credentials,password,authorization_code,implicit,refresh_token', 'http://www.baidu.com', '', 7200, 259200, NULL, '2021-06-25 15:39:20', 0, 0, 'false');
+INSERT INTO `oauth_client_details` VALUES ('c2', 'res2', '$2a$10$hnenme41CjAqx7t24.DEAumAJkH5kz8xJUjv5A9hNqr8id.b6g5FK', 'ROLE_API', 'client_credentials,password,authorization_code,implicit,refresh_token', 'http://www.baidu.com', NULL, 31536000, 2592000, NULL, '2021-06-25 15:39:22', 0, 0, 'false');
+
+-- ----------------------------
+-- Table structure for oauth_code
+-- ----------------------------
+DROP TABLE IF EXISTS `oauth_code`;
+CREATE TABLE `oauth_code`  (
+  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `authentication` blob NULL,
+  INDEX `code_index`(`code`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of oauth_code
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for t_permission

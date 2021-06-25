@@ -3,9 +3,13 @@
 GET http://localhost:53020/uaa/oauth/authorize?client_id=c1&response_type=code&scope=all&redirect_uri=http://www.baidu.com
 Accept: application/json
 
+### scope 需要注意范围认证端服务支持的范围
+GET http://localhost:53020/uaa/oauth/authorize?client_id=c1&response_type=code&scope=ROLE_ADMIN&redirect_uri=http://www.baidu.com
+Accept: application/json
+
 ### 客户端拿着授权码向授权服务器索要访问 access_token
 ### 参数中 code 为上面通过确认授权后，重定向回的地址后面跟的参数
 POST http://localhost:53020/uaa/oauth/token
 Content-Type: application/x-www-form-urlencoded
 
-client_id=c1&client_secret=secret&grant_type=authorization_code&code=SPwPgu&redirect_uri=http://www.baidu.com
+client_id=c1&client_secret=secret&grant_type=authorization_code&code=BVXrZw&redirect_uri=http://www.baidu.com
