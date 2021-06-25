@@ -1,0 +1,16 @@
+### 客户端拿着资源拥有者的用户名、密码向授权服务器请求令牌（access_token）
+POST http://localhost:53010/uaa/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=c1&client_secret=secret&grant_type=password&username=zhangsan&password=123
+
+### 验证令牌使用
+POST http://localhost:53010/uaa/oauth/check_token
+Content-Type: application/x-www-form-urlencoded
+
+token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicmVzMSJdLCJ1c2VyX25hbWUiOiJ6aGFuZ3NhbiIsInNjb3BlIjpbIlJPTEVfQURNSU4iLCJST0xFX1VTRVIiLCJST0xFX0FQSSJdLCJleHAiOjE2MjQ2NDgwNzcsImF1dGhvcml0aWVzIjpbInAxIiwicDMiXSwianRpIjoiNTI2ZDU4MDktMzFiYy00Yjc5LWIwYjAtNTNjMjVlY2Y5Zjk3IiwiY2xpZW50X2lkIjoiYzEifQ.ht70wFj7liSTRKbHZqQ-SrSyhqO5h_Hi_Sg0bqkxc6I
+
+### 接口访问带令牌
+GET http://localhost:53010/order/r1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicmVzMSJdLCJ1c2VyX25hbWUiOiJ6aGFuZ3NhbiIsInNjb3BlIjpbIlJPTEVfQURNSU4iLCJST0xFX1VTRVIiLCJST0xFX0FQSSJdLCJleHAiOjE2MjQ2NDgwNzcsImF1dGhvcml0aWVzIjpbInAxIiwicDMiXSwianRpIjoiNTI2ZDU4MDktMzFiYy00Yjc5LWIwYjAtNTNjMjVlY2Y5Zjk3IiwiY2xpZW50X2lkIjoiYzEifQ.ht70wFj7liSTRKbHZqQ-SrSyhqO5h_Hi_Sg0bqkxc6I

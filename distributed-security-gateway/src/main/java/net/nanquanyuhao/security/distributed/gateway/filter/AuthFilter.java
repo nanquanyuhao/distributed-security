@@ -39,6 +39,7 @@ public class AuthFilter extends ZuulFilter {
         RequestContext context = RequestContext.getCurrentContext();
         // 从安全上下文中获取用户身份对象
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // 无 token 访问网关内资源的情况，目前仅有 uua 服务直接暴露
         if (!(authentication instanceof OAuth2Authentication)) {
             return null;
         }
@@ -49,7 +50,8 @@ public class AuthFilter extends ZuulFilter {
 
         // 获取当前用户权限信息
         List<String> authorities = new ArrayList<>();
-        userAuthentication.getAuthorities().stream().forEach(c -> ((GrantedAuthority) c).getAuthority());
+        userAuthentication.getAuthorities().stream().forEach(
+                c -> authorities.add(((GrantedAuthority) c).getAuthority()));
 
         OAuth2Request oAuth2Request = oAuth2Authentication.getOAuth2Request();
         Map<String, String> requestParameters = oAuth2Request.getRequestParameters();

@@ -37,7 +37,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
             http
                     .authorizeRequests()
-                    .antMatchers("/uaa/**").permitAll();
+                    .antMatchers("/uaa/**")
+                    // 此行与教程不一致，额外添加，即 /uaa/** 的路径需要进行认证，其他的放过
+                    .authenticated().anyRequest()
+                    .permitAll();
         }
     }
 
@@ -59,6 +62,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
+
             http
                     .authorizeRequests()
                     .antMatchers("/order/**").access("#oauth2.hasScope('ROLE_API')");
