@@ -1,5 +1,6 @@
 package net.nanquanyuhao.security.distributed.uaa.service;
 
+import com.alibaba.fastjson.JSON;
 import net.nanquanyuhao.security.distributed.uaa.dao.UserDao;
 import net.nanquanyuhao.security.distributed.uaa.model.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,10 @@ public class SpringDataUserDetailsService implements UserDetailsService {
         // 将 permissions 转成数组
         String[] permissionArray = new String[permissions.size()];
         permissions.toArray(permissionArray);
-        UserDetails userDetails = User.withUsername(userDto.getUsername())
+
+        // 将 userDto 转成 json
+        String principal = JSON.toJSONString(userDto);
+        UserDetails userDetails = User.withUsername(principal)
                 .password(userDto.getPassword()).authorities(permissionArray).build();
 
         return userDetails;

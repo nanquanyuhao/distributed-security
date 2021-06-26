@@ -18,11 +18,11 @@ public class OrderController {
      * @return
      */
     @GetMapping(value = "/r1")
-    @PreAuthorize("hasAuthority('p2')") // 拥有 p1 权限才能访问
+    @PreAuthorize("hasAuthority('p1')") // 拥有 p1 权限才能访问
     public String r1() {
 
         // 获取用户身份信息
         UserDTO userDTO = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userDTO.getUsername() + "访问资源 1";
+        return userDTO.getFullname() + "访问资源 1";
     }
 }
