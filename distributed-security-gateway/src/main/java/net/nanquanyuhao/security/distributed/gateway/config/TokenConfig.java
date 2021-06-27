@@ -25,11 +25,16 @@ public class TokenConfig {
         return new JwtTokenStore(accessTokenConverter());
     }
 
+    /**
+     * 转换 JWT
+     *
+     * @return
+     */
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
 
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        // 对称密钥，资源服务器使用该密钥来验证
+        // 对称密钥，资源服务器使用该密钥来验证，为对称加密
         jwtAccessTokenConverter.setSigningKey(SIGNING_KEY);
         return jwtAccessTokenConverter;
     }

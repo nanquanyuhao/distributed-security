@@ -75,7 +75,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
         clients.withClientDetails(clientDetailsService);
         // 暂时使用内存方式
         /*clients.inMemory()
-                // client_id
+                // client_id，第三方应用的客户端 ID
                 .withClient("c1")
                 // 客户端密钥
                 .secret(new BCryptPasswordEncoder().encode("secret"))
@@ -84,7 +84,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 // 该客户端允许的首选类型
                 .authorizedGrantTypes("authorization_code", "password", "client_credentials", "implicit",
                         "refresh_token")
-                // 允许的授权范围
+                // 允许的授权范围，即第三方应用的业务作用域
                 .scopes("all")
                 // false 跳转到授权页面，true 的话直接发令牌
                 .autoApprove(false)

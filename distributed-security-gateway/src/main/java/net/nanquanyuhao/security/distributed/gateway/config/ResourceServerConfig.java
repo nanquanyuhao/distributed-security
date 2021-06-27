@@ -26,8 +26,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         @Autowired
         private TokenStore tokenStore;
 
+        /**
+         * 让资源服务器从 tokenStore 中拿到 token
+         *
+         * @param resources
+         */
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) {
+
             resources.tokenStore(tokenStore).resourceId(RESOURCE_ID)
                     .stateless(true);
         }
@@ -54,8 +60,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         @Autowired
         private TokenStore tokenStore;
 
+        /**
+         * 让资源服务器从 tokenStore 中拿到 token
+         *
+         * @param resources
+         */
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) {
+
             resources.tokenStore(tokenStore).resourceId(RESOURCE_ID)
                     .stateless(true);
         }

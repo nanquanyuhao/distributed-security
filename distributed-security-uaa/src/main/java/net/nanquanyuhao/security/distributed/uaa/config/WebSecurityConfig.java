@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 认证管理器
+     * 由于密码授权不需要登录，内部就需要此认证管理器
      *
      * @return
      * @throws Exception
@@ -47,6 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        // 关闭跨站请求伪造
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/r/r1").hasAuthority("p1")
