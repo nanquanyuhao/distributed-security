@@ -19,9 +19,14 @@ public class TokenConfig {
         // 内存方式，生成普通令牌
         return new InMemoryTokenStore();
     }*/
+
+    /**
+     * JWT 令牌存储方案
+     *
+     * @return
+     */
     @Bean
     public TokenStore tokenStore() {
-        // JWT 令牌存储方案
         return new JwtTokenStore(accessTokenConverter());
     }
 

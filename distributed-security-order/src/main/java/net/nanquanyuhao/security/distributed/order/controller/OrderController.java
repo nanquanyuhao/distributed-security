@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     /**
-     * 测试入口方法
+     * 测试入口方法1
      *
      * @return
      */
@@ -24,5 +24,33 @@ public class OrderController {
         // 获取用户身份信息
         UserDTO userDTO = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userDTO.getFullname() + "访问资源 1";
+    }
+
+    /**
+     * 测试入口方法2
+     *
+     * @return
+     */
+    @GetMapping(value = "/r2")
+    @PreAuthorize("hasAuthority('p2')") // 拥有 p2 权限才能访问
+    public String r2() {
+
+        // 获取用户身份信息
+        UserDTO userDTO = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDTO.getFullname() + "访问资源 2";
+    }
+
+    /**
+     * 测试入口方法3
+     *
+     * @return
+     */
+    @GetMapping(value = "/r3")
+    @PreAuthorize("hasAuthority('p3')") // 拥有 p3 权限才能访问
+    public String r3() {
+
+        // 获取用户身份信息
+        UserDTO userDTO = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDTO.getFullname() + "访问资源 3";
     }
 }

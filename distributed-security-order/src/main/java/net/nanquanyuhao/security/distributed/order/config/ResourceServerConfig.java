@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 
 /**
  * 资源服务配置
+ * 个人认为 auth 的鉴权交给网关后，就不应该有这部分，否则会进行多次交互
  */
 @Configuration
 @EnableResourceServer
@@ -38,6 +39,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
         http
                 .authorizeRequests()
+                // 全部请求均需要客户端令牌具备 ROLE_ADMIN 权限，否则会报 insufficient_scope
                 .antMatchers("/**").access("#oauth2.hasScope('ROLE_ADMIN')")
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

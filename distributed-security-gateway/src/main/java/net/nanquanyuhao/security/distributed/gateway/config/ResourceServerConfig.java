@@ -9,11 +9,14 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 /**
- * 资源服务配置
+ * 用于定义资源服务配置，描述某个接入客户端需要什么样的权限才能访问某个微服务
  */
 @Configuration
-public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+public class ResourceServerConfig {
 
+    /**
+     * 客户端系统标识
+     */
     public static final String RESOURCE_ID = "res1";
 
     /**
@@ -40,13 +43,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
-
             http
                     .authorizeRequests()
-                    .antMatchers("/uaa/**")
-                    // 此行与教程不一致，额外添加，即 /uaa/** 的路径需要进行认证，其他的放过
-                    .authenticated().anyRequest()
-                    .permitAll();
+                    .antMatchers("/uaa/**").permitAll();
         }
     }
 
@@ -74,9 +73,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
-
             http
                     .authorizeRequests()
+                    // 全部请求均需要客户端令牌具备 ROLE_API 权限，否则会报 insufficient_scope
                     .antMatchers("/order/**").access("#oauth2.hasScope('ROLE_API')");
         }
     }

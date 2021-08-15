@@ -46,6 +46,7 @@ public class SpringDataUserDetailsService implements UserDetailsService {
 
         // 将 userDto 转成 json
         String principal = JSON.toJSONString(userDto);
+        // 此处 User.withUsername(principal) 决定了 JWT 载荷中 user_name 的内容，即可以进行拓展用户信息的简单方式
         UserDetails userDetails = User.withUsername(principal)
                 .password(userDto.getPassword()).authorities(permissionArray).build();
 

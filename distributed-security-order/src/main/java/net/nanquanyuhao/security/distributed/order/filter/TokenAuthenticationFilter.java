@@ -6,8 +6,10 @@ import com.alibaba.fastjson.JSONObject;
 import net.nanquanyuhao.security.distributed.order.common.EncryptUtil;
 import net.nanquanyuhao.security.distributed.order.model.UserDTO;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -25,10 +27,24 @@ import java.io.IOException;
 @Component
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
+    /**
+     * 实际上通过 SecurityContextHolder.getContext().getAuthentication() 可以拿到，网关解析后通过 json 传递给后面的情况多此一举
+     * 建议后面的业务服务不需要进行 oauth 的鉴权
+     *
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @param filterChain
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws ServletException, IOException {
-        //解析出头中的token
+
+        // 查看下 requset 的内容，此处会拿到完整的请求头就是传递的 jwt 的值，请求过程只与网关和本业务应用交互，不需要与认证中心交互
+        System.out.println("jwt 内容:" + httpServletRequest.getHeader("Authorization"));
+
+        // 解析出头中的token，即网关处理好的包含自定义用户信息的内容串
         String token = httpServletRequest.getHeader("json-token");
         if (token != null) {
             String json = EncryptUtil.decodeUTF8StringBase64(token);

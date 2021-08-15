@@ -11,10 +11,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
  * 权限拦截器
+ * 实际在权限拦截器起作用之前，oauth框架已经拿到 jwt 做好了响应的解码处理，所以上下文中才可以取到 authentication
  */
 public class AuthFilter extends ZuulFilter {
 
@@ -37,6 +39,9 @@ public class AuthFilter extends ZuulFilter {
     public Object run() throws ZuulException {
 
         RequestContext context = RequestContext.getCurrentContext();
+        // 查看下 requset 的内容，此处会拿到完整的请求头就是传递的 jwt 的值
+        System.out.println("jwt 内容:" + context.getRequest().getHeader("Authorization"));
+
         // 从安全上下文中获取用户身份对象
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // 无 token 访问网关内资源的情况，目前仅有 uua 服务直接暴露
