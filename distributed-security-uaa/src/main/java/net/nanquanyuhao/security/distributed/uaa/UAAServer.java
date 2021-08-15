@@ -7,12 +7,12 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
- * @author Administrator
+ * @author nanquanyuhao
  * @version 1.0
  **/
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableHystrix
+@EnableHystrix // 开启熔断限流相关功能
 @EnableFeignClients(basePackages = {"net.nanquanyuhao.security.distributed.uaa"})
 public class UAAServer {
 

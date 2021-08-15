@@ -28,7 +28,7 @@ import java.util.Arrays;
  * 授权服务配置
  */
 @Configuration
-@EnableAuthorizationServer
+@EnableAuthorizationServer // 开启认证服务
 public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
@@ -58,13 +58,14 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Bean
     public ClientDetailsService clientDetailsService(DataSource dataSource) {
 
+        // 客户端相关信息直接使用依赖从数据库取
         ClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
         ((JdbcClientDetailsService) clientDetailsService).setPasswordEncoder(passwordEncoder);
         return clientDetailsService;
     }
 
     /**
-     * 配置客户端详情信息服务
+     * 配置客户端详情信息服务，客户端信息于此处初始化
      *
      * @param clients
      * @throws Exception
@@ -93,7 +94,8 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     }
 
     /**
-     * 配置令牌访问服务
+     * 配置令牌访问服务，管理令牌
+     * 令牌可被用来加载身份信息，里面包含了这个令牌的相关权限
      *
      * @return
      */
@@ -107,7 +109,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
         // 设置令牌存储策略
         service.setTokenStore(tokenStore);
 
-        // 令牌增强
+        // 令牌增强，即定义 JWT 令牌服务
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtAccessTokenConverter));
         service.setTokenEnhancer(tokenEnhancerChain);
@@ -137,18 +139,17 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     }*/
 
     /**
-     * 令牌访问端点配置
+     * 令牌访问端点及令牌服务配置
      *
      * @param endpoints
      * @throws Exception
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-
         endpoints
-                // 密码模式需要
+                // 认证管理器（密码模式需要）
                 .authenticationManager(authenticationManager)
-                // 授权码模式需要
+                // 授权码模式需要（authorization_code）
                 .authorizationCodeServices(authorizationCodeServices)
                 // 令牌管理服务
                 .tokenServices(tokenService())
@@ -164,7 +165,6 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-
         security
                 // /oauth/token_key 公开
                 .tokenKeyAccess("permitAll()")

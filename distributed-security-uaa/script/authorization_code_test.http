@@ -3,7 +3,7 @@
 GET http://localhost:53020/uaa/oauth/authorize?client_id=c1&response_type=code&scope=all&redirect_uri=http://www.baidu.com
 Accept: application/json
 
-### scope 需要注意范围认证端服务支持的范围
+### scope 需要注意范围认证端服务支持的范围，结合数据库实例数据，c1 可以使用 ROLE_ADMIN,ROLE_USER,ROLE_API 一项
 GET http://localhost:53020/uaa/oauth/authorize?client_id=c1&response_type=code&scope=ROLE_ADMIN&redirect_uri=http://www.baidu.com
 Accept: application/json
 
@@ -12,4 +12,4 @@ Accept: application/json
 POST http://localhost:53020/uaa/oauth/token
 Content-Type: application/x-www-form-urlencoded
 
-client_id=c1&client_secret=secret&grant_type=authorization_code&code=BVXrZw&redirect_uri=http://www.baidu.com
+client_id=c1&client_secret=secret&grant_type=authorization_code&code=69nCqI&redirect_uri=http://www.baidu.com
